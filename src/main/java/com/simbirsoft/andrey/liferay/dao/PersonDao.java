@@ -6,11 +6,11 @@ import com.simbirsoft.andrey.liferay.model.Person;
 
 public interface PersonDao {
 	
-	Person getPersonById(Long id);
+	Person getPersonById(Integer id);
 	
 	List<Person> getAllPerson();	
 	
-	void removePerson(Long id);
+	void removePerson(Integer id);
 	
 	void saveOrUpdatePerson(Person person);	
 }

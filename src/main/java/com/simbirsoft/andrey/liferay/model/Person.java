@@ -1,5 +1,6 @@
 package com.simbirsoft.andrey.liferay.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Person {
+public class Person implements Serializable {
+
+	private static final long serialVersionUID = 2713311358187074107L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)	
-	private Long id;
+	private Integer id;
 	
 	private String firstName;
 	
@@ -21,11 +24,11 @@ public class Person {
 	private Date birthday;
 
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

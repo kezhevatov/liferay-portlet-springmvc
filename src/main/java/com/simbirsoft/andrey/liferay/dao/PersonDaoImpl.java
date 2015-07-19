@@ -17,7 +17,7 @@ import com.simbirsoft.andrey.liferay.model.Person;
 @Transactional
 public class PersonDaoImpl implements PersonDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PersonDaoImpl.class);
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -36,7 +36,7 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Transactional
-	public Person getPersonById(Long id) {
+	public Person getPersonById(Integer id) {
 		Person person = (Person)sessionFactory.openSession().get(Person.class, id);
 		return person;
 	}
@@ -48,7 +48,7 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Transactional
-	public void removePerson(Long id) {		
+	public void removePerson(Integer id) {		
 		Person person = getPersonById(id);
 		if (person != null)
 			sessionFactory.openSession().delete(person);

@@ -25,7 +25,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Transactional
-	public Person getPersonById(Long id) {
+	public Person getPersonById(Integer id) {
 		return personDao.getPersonById(id);
 	}
 
@@ -35,7 +35,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Transactional
-	public void removePerson(Long id) {
+	public void removePerson(Integer id) {
 		personDao.removePerson(id);
 	}
 

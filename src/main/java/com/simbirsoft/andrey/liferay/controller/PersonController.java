@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
@@ -36,11 +38,6 @@ public class PersonController {
 	@RenderMapping
 	public String defaultRender(Locale locale,  Model model) {		
 		List<Person> persons = personService.getAllPerson();
-		
-		Person person = new Person();
-		person.setFirstName("Asd");
-		person.setLastName("Cfdsd");
-		personService.saveOrUpdatePerson(person);
 		model.addAttribute("persons", persons);
 		return "list";
 	}
@@ -71,14 +68,16 @@ public class PersonController {
 	  }
 	
 	@RenderMapping(params = "render=view")
-	public String viewPerson(Model model, @RequestParam(value = "personId", required = false) Integer personId) {
+	public String viewPerson(@RequestParam(value = "personId", required = false) Integer personId,
+		      Map<String, Object> map) {
+	
 		Person person = null;
 		if (personId != null) {
 			logger.info("person id is " + personId);
 			person = personService.getPersonById(personId);
 		}
 		if (person != null) {
-			model.addAttribute("person", person);
+			map.put("person", person);
 		}
 		return "view";
 	}

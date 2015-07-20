@@ -28,9 +28,11 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="birthday">Birthday</label>
+			<label class="control-label" for="birthday">Birthday<span
+				class="required">*</span>
+			</label>
 			<div class="controls">
-				<form:input path="birthday" />
+				<form:input path="birthday" cssClass="required alpha"/>
 			</div>
 		</div>
 

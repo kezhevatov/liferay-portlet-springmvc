@@ -1,12 +1,14 @@
 package com.simbirsoft.andrey.liferay.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.simbirsoft.andrey.liferay.vo.PersonVO;
 
 @Entity
 public class Person implements Serializable {
@@ -23,6 +25,15 @@ public class Person implements Serializable {
 	
 	private Date birthday;
 
+	public Person() {
+	}
+	
+	public Person(PersonVO personVO) {
+		this.id = personVO.getId();
+		this.firstName = personVO.getFirstName();
+		this.lastName = personVO.getLastName();
+		this.birthday = Date.valueOf(personVO.getBirthday().toString());
+	}
 
 	public Integer getId() {
 		return id;

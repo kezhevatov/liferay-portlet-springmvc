@@ -1,9 +1,16 @@
 <%@include file="init.jsp"%>
+<portlet:actionURL var="deletePersonURL">
+	<portlet:param name="action" value="delete" />
+</portlet:actionURL>
 <portlet:renderURL var="backToList" />
+
 <p>
-<liferay-ui:header title="Back to persons List" backURL="${backToList}" backLabel="Back"></liferay-ui:header>
+	<liferay-ui:header title="Back to person list" backURL="${backToList}"
+		backLabel="Back"></liferay-ui:header>
 </p>
-<c:choose>
+<form:form id="edit" commandName="person" method="post"
+	action="${deletePersonURL}" cssClass="form-horizontal">
+<c:choose>	
 	<c:when test="${empty person}">
 		Person not found
 	</c:when>
@@ -24,5 +31,10 @@
 				</div>					
 			</fieldset>
 		</div>
+		<div class="well well-large">
+			<form:hidden path="id" />
+			<button type="submit" class="btn btn-danger button-submit">Delete</button>
+		</div>
 	</c:otherwise>
 </c:choose>
+</form:form>

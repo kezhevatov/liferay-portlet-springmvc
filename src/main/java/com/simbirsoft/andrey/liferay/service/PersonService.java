@@ -10,7 +10,7 @@ public interface PersonService {
 	
 	List<Person> getAllPerson();	
 	
-	void removePerson(Integer id);
+	void removePerson(Person person);
 	
 	void saveOrUpdatePerson(Person person);
 }

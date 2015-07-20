@@ -35,8 +35,8 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Transactional
-	public void removePerson(Integer id) {
-		personDao.removePerson(id);
+	public void removePerson(Person person) {
+		personDao.removePerson(person);
 	}
 
 	public PersonDao getPersonDao() {

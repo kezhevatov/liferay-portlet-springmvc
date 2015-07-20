@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.simbirsoft.andrey.liferay.controller.PersonController;
 import com.simbirsoft.andrey.liferay.model.Person;
 
 @Repository
@@ -32,26 +31,25 @@ public class PersonDaoImpl implements PersonDao {
 	
 	@Transactional
 	public void saveOrUpdatePerson(Person person) {
-		sessionFactory.openSession().saveOrUpdate(person);
+		sessionFactory.getCurrentSession().saveOrUpdate(person);
 	}
 	
 	@Transactional
 	public Person getPersonById(Integer id) {
-		Person person = (Person)sessionFactory.openSession().get(Person.class, id);
+		Person person = (Person)sessionFactory.getCurrentSession().get(Person.class, id);
 		return person;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Person> getAllPerson() {
-		return sessionFactory.openSession().createQuery("from Person").list();
+		return sessionFactory.getCurrentSession().createQuery("from Person").list();
 	}
 	
 	@Transactional
-	public void removePerson(Integer id) {		
-		Person person = getPersonById(id);
+	public void removePerson(Person person) {		
 		if (person != null)
-			sessionFactory.openSession().delete(person);
+			sessionFactory.getCurrentSession().delete(person);
 	}
 
 }

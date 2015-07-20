@@ -20,7 +20,7 @@
 	<table class="table table-striped table-bordered" >
 		<thead>
 			<tr>
-			<th width="5%">Id</th><th width="20%">First name</th><th width="20%">Last name</th><th width="10%">Birthday</th><th></th>
+			<th width="5%">Id</th><th width="20%">First name</th><th width="20%">Last name</th><th width="10%">Birthday</th><th  width="5%"></th>
 			</tr>
 		</thead>
 		<tbody>

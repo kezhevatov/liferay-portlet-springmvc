@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
-import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.simbirsoft.andrey.liferay.model.Person;
 import com.simbirsoft.andrey.liferay.service.PersonService;
@@ -39,18 +36,7 @@ public class PersonController {
 	
 	@RenderMapping
 	public String defaultRender(Locale locale,  Model model) {		
-		Person person = new Person();
-		person.setFirstName("TestFirstName");
-		person.setLastName("TestLastName");
-		person.setBirthday(new Date());	
-		personService.saveOrUpdatePerson(person);
-		
-		Person person2 = new Person();
-		person2.setFirstName("TestFirstName2");
-		person2.setLastName("TestLastName2");
-		person2.setBirthday(new Date());	
-		personService.saveOrUpdatePerson(person2);
-		
+				
 		List<Person> persons = personService.getAllPerson();
 		model.addAttribute("persons", persons);
 		return "list";
@@ -75,6 +61,7 @@ public class PersonController {
 	    }
 	    if (person == null) {
 	    	person = new Person();
+	    	person.setBirthday(new Date());
 	    }
 
 	    model.addAttribute("person", person);
@@ -97,27 +84,45 @@ public class PersonController {
 	}
 	
 	@ActionMapping(params = "action=save")
-	  public void savePerson(ActionRequest actionRequest, ActionResponse actionResponse, Model model,
-	      @ModelAttribute("person") Person person, BindingResult result) throws IOException,
-	      PortletException {
-	    logger.debug("In adddPerson()");
+	public void savePerson(ActionRequest actionRequest,
+			ActionResponse actionResponse, Model model,
+			@ModelAttribute("person") Person person, BindingResult result)
+			throws IOException, PortletException {
 
-
-	    try {
-	    	personService.saveOrUpdatePerson(person);
-	    } catch (Exception e) {
-	    	logger.error("Error while saving person", e);
-	    }
-	  }	
+		try {
+			personService.saveOrUpdatePerson(person);
+		} catch (Exception e) {
+			logger.error("Error while saving person", e);
+		}
+	}
 	
 	@RenderMapping(params = "render=delete")
-	  public String deletePerson(@RequestParam("personId") Integer personId, Model model) throws IOException {
+	public String deletePerson(@RequestParam(value = "personId", required = false) Integer personId, Model model) {
+	    Person person = null;
+	    if (personId != null) {
 
-	    try {
-	      personService.removePerson(personId);
-	    } catch (Exception e) {
-	      logger.error("Error while deleting student", e);	      
-	    }	 
-	    return "list";
+	    	logger.info("person id is " + personId);
+	    	person = personService.getPersonById(personId);
+	    }
+	    if (person == null) {
+	    	person = new Person();
+	    	person.setBirthday(new Date());
+	    }
+
+	    model.addAttribute("person", person);
+	    return "delete";
 	  }
+	
+	@ActionMapping(params = "action=delete")
+	public void removePerson(ActionRequest actionRequest,
+			ActionResponse actionResponse, Model model,
+			@ModelAttribute("person") Person person, BindingResult result)
+			throws IOException, PortletException {
+
+		try {
+			personService.removePerson(person);
+		} catch (Exception e) {
+			logger.error("Error while delete person", e);
+		}
+	}
 }

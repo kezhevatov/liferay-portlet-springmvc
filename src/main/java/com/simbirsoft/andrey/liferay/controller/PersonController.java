@@ -1,6 +1,7 @@
 package com.simbirsoft.andrey.liferay.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -8,7 +9,8 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.simbirsoft.andrey.liferay.model.Person;
 import com.simbirsoft.andrey.liferay.service.PersonService;
@@ -37,6 +39,18 @@ public class PersonController {
 	
 	@RenderMapping
 	public String defaultRender(Locale locale,  Model model) {		
+		Person person = new Person();
+		person.setFirstName("TestFirstName");
+		person.setLastName("TestLastName");
+		person.setBirthday(new Date());	
+		personService.saveOrUpdatePerson(person);
+		
+		Person person2 = new Person();
+		person.setFirstName("TestFirstName2");
+		person.setLastName("TestLastName2");
+		person.setBirthday(new Date());	
+		personService.saveOrUpdatePerson(person2);
+		
 		List<Person> persons = personService.getAllPerson();
 		model.addAttribute("persons", persons);
 		return "list";
@@ -51,7 +65,7 @@ public class PersonController {
 	}
 	
 	@RenderMapping(params = "render=edit")
-	public String personEdit(@RequestParam(value = "personId", required = false) Integer personId, Model model) {
+	public String editPerson(@RequestParam(value = "personId", required = false) Integer personId, Model model) {
 	    logger.debug("in addPerson()");
 	    Person person = null;
 	    if (personId != null) {
@@ -95,4 +109,15 @@ public class PersonController {
 	    	logger.error("Error while saving person", e);
 	    }
 	  }	
+	
+	@RenderMapping(params = "render=delete")
+	  public String deletePerson(@RequestParam("personId") Integer personId, Model model) throws IOException {
+
+	    try {
+	      personService.removePerson(personId);
+	    } catch (Exception e) {
+	      logger.error("Error while deleting student", e);	      
+	    }	 
+	    return "list";
+	  }
 }

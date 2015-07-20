@@ -1,7 +1,7 @@
 <%@include file="init.jsp"%>
 <portlet:renderURL var="backToList" />
 <p>
-<liferay-ui:header title="Back to person List" backURL="${backToList}" backLabel="Back"></liferay-ui:header>
+<liferay-ui:header title="Back to persons List" backURL="${backToList}" backLabel="Back"></liferay-ui:header>
 </p>
 <c:choose>
 	<c:when test="${empty person}">

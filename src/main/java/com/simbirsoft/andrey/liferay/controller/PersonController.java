@@ -46,9 +46,9 @@ public class PersonController {
 		personService.saveOrUpdatePerson(person);
 		
 		Person person2 = new Person();
-		person.setFirstName("TestFirstName2");
-		person.setLastName("TestLastName2");
-		person.setBirthday(new Date());	
+		person2.setFirstName("TestFirstName2");
+		person2.setLastName("TestLastName2");
+		person2.setBirthday(new Date());	
 		personService.saveOrUpdatePerson(person2);
 		
 		List<Person> persons = personService.getAllPerson();

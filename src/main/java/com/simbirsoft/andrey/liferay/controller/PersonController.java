@@ -3,8 +3,6 @@ package com.simbirsoft.andrey.liferay.controller;
 import java.util.List;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +21,6 @@ import com.simbirsoft.andrey.liferay.vo.PersonVO;
 @RequestMapping("VIEW")
 public class PersonController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
-	
 	@Autowired
 	private PersonService personService;
 	
@@ -38,7 +34,6 @@ public class PersonController {
 	
 	@RenderMapping(params = "render=edit")
 	public String editPerson(@RequestParam(value = "personId", required = false) Integer personId, Model model) {
-	    logger.debug("in addPerson()");
 	    Person person = null;
 	    if (personId != null) {
 	    	person = personService.getPersonById(personId);	    	
@@ -66,7 +61,7 @@ public class PersonController {
 			Person	person = new Person(personVO);			
 			personService.saveOrUpdatePerson(person);
 		} catch (Exception e) {
-			logger.error("Error while saving person", e);
+			
 		}
 	}
 	
@@ -88,7 +83,7 @@ public class PersonController {
 			Person person = personService.getPersonById(personVO.getId());
 			personService.removePerson(person);
 		} catch (Exception e) {
-			logger.error("Error while delete person", e);
+			
 		}
 	}
 }

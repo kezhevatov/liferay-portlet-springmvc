@@ -3,40 +3,42 @@ package com.simbirsoft.andrey.liferay.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.simbirsoft.andrey.liferay.vo.PersonVO;
 
 @Entity
+@Table(name = "person")
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = 2713311358187074107L;
 
 	@Id
+	@Column(name = "ID")
 	@GeneratedValue	
 	private Integer id;
 	
+	@Column(name = "first_name")
 	private String firstName;
 	
+	@Column(name = "last_name")
 	private String lastName;
 	
+	@Column(name = "birthday")
 	private Date birthday;
 
 	public Person() {
 	}
-	
-	public Person(PersonVO personVO) {
+
+	public Person(PersonVO personVO) throws IllegalArgumentException {
 		this.id = personVO.getId();
 		this.firstName = personVO.getFirstName();
 		this.lastName = personVO.getLastName();
-		try {
-			this.birthday = Date.valueOf(personVO.getBirthday().toString());
-		}
-		catch (IllegalArgumentException e) {
-			this.birthday = null;
-		}
+		this.birthday = Date.valueOf(personVO.getBirthday().toString());
 	}
 
 	public Integer getId() {

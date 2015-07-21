@@ -1,56 +1,41 @@
-package com.simbirsoft.andrey.liferay.dao;
+package com.simbirsoft.andrey.liferay.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.simbirsoft.andrey.liferay.dao.PersonDao;
 import com.simbirsoft.andrey.liferay.model.Person;
 
 @Repository
-@Transactional
 public class PersonDaoImpl implements PersonDao {
-
-	private static final Logger logger = LoggerFactory.getLogger(PersonDaoImpl.class);
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	public PersonDaoImpl(){
-		logger.info("PersonDao created");
-	}
 	
-	public Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Transactional
 	public Integer saveOrUpdatePerson(Person person) {
 		sessionFactory.getCurrentSession().saveOrUpdate(person);
 		return person.getId();
 	}
-	
-	@Transactional
+
 	public Person getPersonById(Integer id) {
 		Person person = (Person)sessionFactory.getCurrentSession().get(Person.class, id);
 		return person;
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Transactional
 	public List<Person> getAllPerson() {
 		return sessionFactory.getCurrentSession().createQuery("from Person").list();
 	}
 	
-	@Transactional
 	public void removePerson(Person person) {		
-		if (person != null)
+		if (person != null) {
 			sessionFactory.getCurrentSession().delete(person);
+		} else {
+			throw new NullPointerException("No person to delete");
+		}
 	}
-
 }

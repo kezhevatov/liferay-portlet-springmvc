@@ -3,6 +3,8 @@ package com.simbirsoft.andrey.liferay.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,12 +58,23 @@ public class PersonController {
 	}
 	
 	@ActionMapping(params = "action=save")
-	public void savePerson(@ModelAttribute("person") PersonVO personVO) {
-		try {
-			Person	person = new Person(personVO);			
-			personService.saveOrUpdatePerson(person);
-		} catch (Exception e) {
-			
+	public void savePerson(@ModelAttribute("person") PersonVO personVO, ActionRequest actionRequest) {
+		Person person = null;
+		if (!personVO.getFirstName().isEmpty()
+				&& !personVO.getLastName().isEmpty()
+				&& !personVO.getBirthday().isEmpty()) {
+			try {
+				person = new Person(personVO);
+				personService.saveOrUpdatePerson(person);
+			} catch (Exception e) {
+				person = null;
+			}
+		}
+		
+		if (person != null) {
+			actionRequest.setAttribute("success", "Person is saved");
+		} else {
+			actionRequest.setAttribute("error",	"Person hasn't been saved. Please fill all fields correct");
 		}
 	}
 	
@@ -78,12 +91,19 @@ public class PersonController {
 	  }
 	
 	@ActionMapping(params = "action=delete")
-	public void removePerson(@ModelAttribute("person") PersonVO personVO) {
+	public void removePerson(@ModelAttribute("person") PersonVO personVO, ActionRequest actionRequest) {
+		Person person = null;
 		try {
-			Person person = personService.getPersonById(personVO.getId());
+			person = personService.getPersonById(personVO.getId());
 			personService.removePerson(person);
 		} catch (Exception e) {
-			
+			person = null;
+		}
+		
+		if (person != null) {
+			actionRequest.setAttribute("success", "Person is deleted");
+		} else {
+			actionRequest.setAttribute("error",	"Person hasn't been deleted. Please fill all fields correct");
 		}
 	}
 }

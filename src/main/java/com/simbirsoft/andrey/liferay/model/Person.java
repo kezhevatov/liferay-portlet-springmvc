@@ -22,13 +22,13 @@ public class Person implements Serializable {
 	@GeneratedValue	
 	private Integer id;
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	
-	@Column(name = "birthday")
+	@Column(name = "birthday", nullable = false)
 	private Date birthday;
 
 	public Person() {

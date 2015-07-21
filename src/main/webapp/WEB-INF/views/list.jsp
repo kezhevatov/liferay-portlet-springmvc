@@ -17,15 +17,13 @@
 		<c:if test="${empty success }"> 
 		style="display: none;"
 	</c:if>>
-		<i class="icon-remove close" data-dismiss="alert"></i> <strong>Success!</strong>
-		<span class="message">${success}</span>
+		<strong>Success! </strong><span class="message">${success}</span>
 	</div>
 	<div class="alert alert-danger fade in"
 		<c:if test="${empty error }"> 
 		style="display: none;"
 	</c:if>>
-		<i class="icon-remove close" data-dismiss="alert"></i> <strong>Error!</strong><span
-			class="message">${error}</span>
+		<strong>Error! </strong><span class="message">${error}</span>
 	</div>
 
 	<p class="pull-right">

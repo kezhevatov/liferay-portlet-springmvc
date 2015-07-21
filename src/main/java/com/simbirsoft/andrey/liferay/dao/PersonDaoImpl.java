@@ -30,8 +30,9 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Transactional
-	public void saveOrUpdatePerson(Person person) {
+	public Integer saveOrUpdatePerson(Person person) {
 		sessionFactory.getCurrentSession().saveOrUpdate(person);
+		return person.getId();
 	}
 	
 	@Transactional

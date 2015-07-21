@@ -32,7 +32,7 @@
 				class="required">*</span>
 			</label>
 			<div class="controls">
-				<form:input path="birthday" cssClass="required alpha"/>
+				<form:input path="birthday" cssClass="required alpha"/> (ex.: 2015-01-21)
 			</div>
 		</div>
 

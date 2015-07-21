@@ -11,8 +11,8 @@ public class PersonVO {
 	private String lastName;
 	
 	private String birthday;
-
-	public PersonVO() {
+	
+	public PersonVO() {		
 	}
 	
 	public PersonVO(Person person) {

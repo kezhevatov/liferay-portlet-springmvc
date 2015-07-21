@@ -2,7 +2,6 @@ package com.simbirsoft.andrey.liferay.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +31,12 @@ public class Person implements Serializable {
 		this.id = personVO.getId();
 		this.firstName = personVO.getFirstName();
 		this.lastName = personVO.getLastName();
-		this.birthday = Date.valueOf(personVO.getBirthday().toString());
+		try {
+			this.birthday = Date.valueOf(personVO.getBirthday().toString());
+		}
+		catch (IllegalArgumentException e) {
+			this.birthday = null;
+		}
 	}
 
 	public Integer getId() {

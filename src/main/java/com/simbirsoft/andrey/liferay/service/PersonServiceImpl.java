@@ -20,8 +20,8 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	@Transactional
-	public void saveOrUpdatePerson(Person person) {
-		personDao.saveOrUpdatePerson(person);
+	public Integer saveOrUpdatePerson(Person person) {
+		return personDao.saveOrUpdatePerson(person);
 	}
 
 	@Transactional

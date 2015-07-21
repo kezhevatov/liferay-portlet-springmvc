@@ -12,5 +12,5 @@ public interface PersonDao {
 	
 	void removePerson(Person person);
 	
-	void saveOrUpdatePerson(Person person);	
+	Integer saveOrUpdatePerson(Person person);	
 }

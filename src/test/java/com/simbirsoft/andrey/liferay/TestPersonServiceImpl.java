@@ -26,6 +26,7 @@ public class TestPersonServiceImpl {
 		personVO.setBirthday("2015-01-21");
 		Person person = new Person(personVO);		
 		Integer personId = personService.saveOrUpdatePerson(person);
-		Assert.assertNull("Add record incorrect", personService.getPersonById(personId));		
+		Person resultPerson = personService.getPersonById(personId);
+		Assert.assertNotNull("Add record incorrect", resultPerson);		
 	}	
 }

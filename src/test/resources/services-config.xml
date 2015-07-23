@@ -40,6 +40,6 @@
 	    <property name="sessionFactory" ref="sessionFactory"/>
 	  </bean>
 	  
-    <bean id="personService"  class="com.simbirsoft.andrey.liferay.service.PersonServiceImpl"/>
-    <bean id="personDao"      class="com.simbirsoft.andrey.liferay.dao.PersonDaoImpl"/>   
+    <bean id="personService"  class="com.simbirsoft.andrey.liferay.service.impl.PersonServiceImpl"/>
+    <bean id="personDao"      class="com.simbirsoft.andrey.liferay.dao.impl.PersonDaoImpl"/>   
 </beans>
